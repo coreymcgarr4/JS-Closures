@@ -14,19 +14,11 @@ function outer() {
 closure over the name variable. Invoke outer saving the return value into
 another variable called 'inner'. */
 
-// Code Here
+var inner = outer();
 
 //Once you do that, invoke inner.
 
-//Code Here
-
-
-
-
-
-
-
-
+inner();
 
 
 /******************************************************************************\
@@ -46,13 +38,8 @@ function callFriend(name) {
 Create a callJake function that when invoked with '435-555-9248' returns 'Calling Jake at 435-555-9248'
 in your console. */
 
-  //Code Here
-
-
-
-
-
-
+  var callJake = callFriend("Jake");
+  callJake("435-555-9248");
 
 
 
@@ -64,22 +51,22 @@ in your console. */
 /* Write a function called makeCounter that makes the following code work
 properly. */
 
-//Code Here
+function makeCounter(){
+  var total = 0;
+  return function(){
+    // this.start ++;
+  return total += 1;
 
-//Uncomment this once you make your function
-//   var count = makeCounter();
-//   count(); // 1
-//   count(); // 2
-//   count(); // 3
-//   count(); // 4
+}
+}
 
-
-
-
-
-
-
-
+//
+// //Uncomment this once you make your function
+  var count = makeCounter();
+  count(); // 1
+  count(); // 2
+  count(); // 3
+  count(); // 4
 
 
 /******************************************************************************\
@@ -91,34 +78,30 @@ properly. */
 up/down counter. The first function is called inc, this function is responsible
 for incrementing the value once. The second function is called dec, this
 function is responsible for decrementing the value by one. You will need to use
-the module pattern to achieve this. 
-Information on the module pattern available here: 
+the module pattern to achieve this.
+Information on the module pattern available here:
 http://stackoverflow.com/questions/17776940/javascript-module-pattern-with-example?answertab=votes#tab-top
 */
 
 function counterFactory(value) {
-
-  // Code here.
-
-
-  return {
-  }
+    var sum = value;
+      return {
+    inc: function(){
+      sum += 1;
+      return sum;
+    },
+    dec: function(){
+      sum -= 1;
+      return sum;
+    }
+}
 }
 
-
 counter = counterFactory(10);
-// counter.inc() // 11
-// counter.inc() // 12
-// counter.inc() // 13
-// counter.dec() // 12
-
-
-
-
-
-
-
-
+counter.inc() // 11
+counter.inc() // 12
+counter.inc() // 13
+counter.dec() // 12
 
 
 /******************************************************************************\
@@ -132,23 +115,17 @@ will return 'You're doing awesome, keep it up firstname lastname.' */
 function motivation(firstname, lastname) {
 
   var welcomeText = 'You\'re doing awesome, keep it up ';
-
-  // code message function here.
+  var message = function(){
+    return welcomeText + firstname + ' ' + lastname + '.'
+  }
 
 
   //Uncommment this to return the value of your invoked message function
-  //return message();
+  return message();
 
 }
 
 motivation('Billy', 'Bob'); // 'You're doing awesome keep it up Billy Bob.
-
-
-
-
-
-
-
 
 
 
@@ -165,7 +142,8 @@ var module = (function() {
   var person = {
     name: "phillip",
     age: 29,
-    location: "Utah"
+    location: "Utah",
+    }
   };
 
   function privateMethod(){
@@ -176,8 +154,8 @@ var module = (function() {
   // outside our lexical scope
   return {
     // Code here.
-  };
-
+    
+publicMethod();
 })();
 
 
@@ -234,11 +212,12 @@ to 5. What we need to do is console.log(i) so that it logs like so:
  Fix the code below to log the desired output.
  */
 
-function timeOutCounter() {
-  for (var i = 0; i <= 5; i++) {
-    setTimeout(function() {
-    	console.log(i)
-	}, i * 1000)
-  }
-}
-timeOutCounter();
+ function timeOutCounter() {
+   for (var i = 0; i <= 5; i++) {
+       setTimeout(function(x) {
+     	return function(){
+     	console.log(x);
+ 	}; } (i), i * 1000);
+       }
+ }
+ timeOutCounter();
